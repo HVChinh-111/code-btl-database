@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 public class MainController {
 
@@ -71,7 +70,7 @@ public class MainController {
     @FXML
     private TableColumn<Medicine, String> colMedicineID;
     @FXML
-    private TableColumn<Medicine, String> colName;
+    private TableColumn<Medicine, String> colProcedureCatalogName;
     @FXML
     private TableColumn<Medicine, String> colStrength;
     @FXML
@@ -117,7 +116,7 @@ public class MainController {
 
         // Initialize Medicine Table
         colMedicineID.setCellValueFactory(new PropertyValueFactory<>("medicineId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colProcedureCatalogName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colStrength.setCellValueFactory(new PropertyValueFactory<>("strength"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tableMedicine.setItems(medicines);

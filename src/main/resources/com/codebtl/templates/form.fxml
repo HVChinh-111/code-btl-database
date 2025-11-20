@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -10,100 +14,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="tabPane" prefHeight="720" prefWidth="1280" stylesheets="/com/codebtl/static/styles/style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codebtl.controller.MainController">
+<TabPane fx:id="tabPane" prefHeight="720" prefWidth="1280" stylesheets="/com/codebtl/static/styles/style.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codebtl.controller.MainController">
     <tabs>
-        <!-- Encounter Tab -->
-        <Tab text="Encounter">
-            <content>
-                <AnchorPane>
-                    <children>
-                        <!-- TableView -->
-                        <TableView fx:id="tableEncounter" prefHeight="360.0" prefWidth="1260.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-                            <columns>
-                                <TableColumn fx:id="colEncounterID" prefWidth="131.20001542568207" text="Encounter ID" />
-                                <TableColumn fx:id="colAppointmentID" prefWidth="135.2000274658203" text="Appointment ID" />
-                                <TableColumn fx:id="colChiefComplaint" prefWidth="256.0000305175781" text="Chief Complaint" />
-                                <TableColumn fx:id="colDiagnosis" prefWidth="240.79998779296875" text="Diagnosis" />
-                                <TableColumn fx:id="colNotes" prefWidth="228.79998779296875" text="Notes" />
-                                <TableColumn fx:id="colStartTime" prefWidth="95.0" text="Start Time" />
-                                <TableColumn fx:id="colEndTime" prefWidth="90.0" text="End Time" />
-                                <TableColumn fx:id="colFee" prefWidth="82.40007324218732" text="Fee" />
-                            </columns>
-                        </TableView>
-
-                        <!-- Input Fields -->
-                        <!-- Row 1 -->
-                        <Label layoutX="10.0" layoutY="370.0" prefHeight="26.0" prefWidth="120.0" text="Encounter ID">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtEncounterID" layoutX="140.0" layoutY="367.0" prefHeight="31.0" prefWidth="180.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <Label layoutX="350.0" layoutY="370.0" prefHeight="26.0" prefWidth="130.0" text="Appointment ID">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtAppointmentID" layoutX="490.0" layoutY="367.0" prefHeight="31.0" prefWidth="180.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Row 2 -->
-                        <Label layoutX="10.0" layoutY="415.0" prefHeight="26.0" prefWidth="120.0" text="Chief Complaint">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtChiefComplaint" layoutX="140.0" layoutY="412.0" prefHeight="31.0" prefWidth="400.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Row 3 -->
-                        <Label layoutX="10.0" layoutY="455.0" prefHeight="26.0" prefWidth="120.0" text="Diagnosis">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtDiagnosis" layoutX="140.0" layoutY="452.0" prefHeight="31.0" prefWidth="400.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Row 4 -->
-                        <Label layoutX="10.0" layoutY="495.0" prefHeight="26.0" prefWidth="120.0" text="Notes">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtNotes" layoutX="140.0" layoutY="492.0" prefHeight="31.0" prefWidth="400.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Row 5 -->
-                        <Label layoutX="10.0" layoutY="535.0" prefHeight="26.0" prefWidth="120.0" text="Start Time">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtStartTime" layoutX="140.0" layoutY="532.0" prefHeight="31.0" prefWidth="180.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <Label layoutX="350.0" layoutY="535.0" prefHeight="26.0" prefWidth="120.0" text="End Time">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtEndTime" layoutX="490.0" layoutY="532.0" prefHeight="31.0" prefWidth="180.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Row 6 -->
-                        <Label layoutX="10.0" layoutY="575.0" prefHeight="26.0" prefWidth="120.0" text="Fee">
-                            <font><Font size="15.0" /></font>
-                        </Label>
-                        <TextField fx:id="txtFee" layoutX="140.0" layoutY="572.0" prefHeight="31.0" prefWidth="180.0">
-                            <font><Font size="15.0" /></font>
-                        </TextField>
-
-                        <!-- Buttons Row -->
-                        <Button fx:id="btnAddEncounter" layoutX="10.0" layoutY="615.0" prefHeight="30.0" prefWidth="80.0" text="Add" />
-                        <Button fx:id="btnUpdateEncounter" layoutX="100.0" layoutY="615.0" prefHeight="30.0" prefWidth="80.0" text="Update" />
-                        <Button fx:id="btnDeleteEncounter" layoutX="190.0" layoutY="615.0" prefHeight="30.0" prefWidth="80.0" text="Delete" />
-                        <Button fx:id="btnSearchEncounter" layoutX="280.0" layoutY="615.0" prefHeight="30.0" prefWidth="80.0" text="Search" />
-
-                    </children>
-                </AnchorPane>
-            </content>
-        </Tab>
 
         <!-- Medicine Tab -->
         <Tab text="Medicine">
@@ -114,7 +26,7 @@
                         <TableView fx:id="tableMedicine" prefHeight="360.0" prefWidth="1232.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="colMedicineID" prefWidth="130.0" text="Medicine ID" />
-                                <TableColumn fx:id="colName" prefWidth="450.0" text="Name" />
+                                <TableColumn fx:id="colMedicineName" prefWidth="450.0" text="Name" />
                                 <TableColumn fx:id="colStrength" prefWidth="380.0" text="Strength" />
                                 <TableColumn fx:id="colUnit" prefWidth="299.0" text="Unit" />
                             </columns>
@@ -168,5 +80,169 @@
                 </AnchorPane>
             </content>
         </Tab>
+      <Tab text="Procedure Catalog">
+         <content>
+            <AnchorPane prefHeight="691.0" prefWidth="1230.0">
+               <children>
+                  <TableView fx:id="tableProcedureCatalog" prefHeight="360.0" prefWidth="1232.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn fx:id="colProcedureID" prefWidth="121.33333051204681" text="Procedure ID" />
+                        <TableColumn fx:id="colProcedureName" prefWidth="305.8666763305664" text="Name" />
+                        <TableColumn fx:id="colType" prefWidth="112.5333251953125" text="Type" />
+                        <TableColumn fx:id="colDescription" prefWidth="461.333251953125" text="Description" />
+                        <TableColumn fx:id="colDefaultPrice" prefWidth="261.86669921875" text="Default Price" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="10.0" layoutY="370.0" prefHeight="26.0" prefWidth="120.0" text="Procedure ID">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtProcedureID" layoutX="140.0" layoutY="367.0" prefHeight="31.0" prefWidth="180.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="350.0" layoutY="370.0" prefHeight="26.0" prefWidth="120.0" text="Name">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtProcedureName" layoutX="480.0" layoutY="367.0" prefHeight="31.0" prefWidth="201.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="10.0" layoutY="415.0" prefHeight="26.0" prefWidth="120.0" text="Type">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="350.0" layoutY="415.0" prefHeight="26.0" prefWidth="120.0" text="Description">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDescription" layoutX="480.0" layoutY="412.0" prefHeight="31.0" prefWidth="426.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="10.0" layoutY="455.0" prefHeight="26.0" prefWidth="120.0" text="Default Price">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDefaultPrice" layoutX="140.0" layoutY="452.0" prefHeight="31.0" prefWidth="180.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="btnAddProcedure" layoutX="10.0" layoutY="500.0" prefHeight="30.0" prefWidth="80.0" text="Add" />
+                  <Button fx:id="btnUpdateProcedure" layoutX="100.0" layoutY="500.0" prefHeight="30.0" prefWidth="80.0" text="Update" />
+                  <Button fx:id="btnDeleteProcedure" layoutX="190.0" layoutY="500.0" prefHeight="30.0" prefWidth="80.0" text="Delete" />
+                  <Button fx:id="btnSearchProcedure" layoutX="280.0" layoutY="500.0" prefHeight="30.0" prefWidth="80.0" text="Search" />
+                   <ComboBox layoutX="165" layoutY="415" prefWidth="150">
+                       <items>
+                           <FXCollections fx:factory="observableArrayList">
+                               <String fx:value="LAB" />
+                               <String fx:value="IMAGING" />
+                               <String fx:value="PROCEDURE" />
+                           </FXCollections>
+                       </items>
+                   </ComboBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Report 1">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableReport1" layoutX="3.0" prefHeight="360.0" prefWidth="1274.0">
+                     <columns>
+                        <TableColumn fx:id="colDoctorID" prefWidth="101.8666570186615" text="Doctor ID" />
+                        <TableColumn fx:id="colDoctorName" prefWidth="252.53336334228516" text="Name" />
+                        <TableColumn fx:id="colDOB" prefWidth="143.46664428710938" text="Date of Birth" />
+                        <TableColumn fx:id="colNumberOfPatients" prefWidth="261.60003662109375" text="Number of patients" />
+                        <TableColumn fx:id="colNumberOfCompletedExaminations" prefWidth="244.7999267578125" text="Number of completed examinations" />
+                        <TableColumn fx:id="colTotalRevenue" prefWidth="269.5999755859375" text="Total revenue" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="36.0" layoutY="462.0" prefHeight="27.0" prefWidth="362.0" text="List of doctors and number of patients examined:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="414.0" layoutY="454.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Search">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <TextField layoutX="34.0" layoutY="517.0" prefHeight="35.0" prefWidth="353.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextField>
+                  <Button layoutX="414.0" layoutY="514.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="212.0" text="Total revenue of all doctors">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <DatePicker layoutX="157.0" layoutY="407.0" prefHeight="26.0" prefWidth="201.0" />
+                  <Label layoutX="39.0" layoutY="401.0" prefHeight="36.0" prefWidth="113.0" text="Time from:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="377.0" layoutY="403.0" prefHeight="36.0" prefWidth="45.0" text="To:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <DatePicker layoutX="418.0" layoutY="406.0" prefHeight="26.0" prefWidth="221.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Report 2">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableReport2" layoutX="3.0" prefHeight="360.0" prefWidth="1274.0">
+                     <columns>
+                        <TableColumn fx:id="colRevenueSource" prefWidth="366.66669821739197" text="Revenue source" />
+                        <TableColumn fx:id="colRevenue1" prefWidth="308.8000793457031" text="Revenue" />
+                        <TableColumn fx:id="colMonth" prefWidth="284.79998779296875" text="Month" />
+                        <TableColumn fx:id="colYear" prefWidth="316.79998779296875" text="Year" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="61.0" layoutY="457.0" prefHeight="27.0" prefWidth="283.0" text="List of revenue and earnings">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="359.0" layoutY="457.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="98.0" text="Search">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
+                  <TextField layoutX="59.0" layoutY="517.0" prefHeight="35.0" prefWidth="230.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextField>
+                  <Button layoutX="326.0" layoutY="513.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="134.0" text="Total revenue">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <DatePicker layoutX="181.0" layoutY="394.0" prefHeight="26.0" prefWidth="278.0" />
+                  <Label layoutX="61.0" layoutY="398.0" text="Choose Date:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
     </tabs>
 </TabPane>
