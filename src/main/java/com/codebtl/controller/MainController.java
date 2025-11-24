@@ -48,6 +48,8 @@ public class MainController {
     private Button btnDeleteMedicine;
     @FXML
     private Button btnSearchMedicine;
+    @FXML
+    private Button btnResetMedicine;
 
     // Procedure Catalog Tab Components
     @FXML
@@ -82,6 +84,8 @@ public class MainController {
     private Button btnDeleteProcedure;
     @FXML
     private Button btnSearchProcedure;
+    @FXML
+    private Button btnResetProcedure;
 
     // Report 1 Tab Components
     @FXML
@@ -138,6 +142,7 @@ public class MainController {
         colStrength.setCellValueFactory(new PropertyValueFactory<>("strength"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tableMedicine.setItems(medicines);
+        tableMedicine.setPlaceholder(new Label(""));
 
         // Initialize Procedure Catalog Table
         colProcedureID.setCellValueFactory(new PropertyValueFactory<>("procedureId"));
@@ -146,6 +151,7 @@ public class MainController {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colDefaultPrice.setCellValueFactory(new PropertyValueFactory<>("defaultPrice"));
         tableProcedureCatalog.setItems(procedures);
+        tableProcedureCatalog.setPlaceholder(new Label(""));
 
         // Initialize Report 1 Table
         colDoctorID.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
@@ -155,12 +161,14 @@ public class MainController {
         colNumberOfCompletedExaminations.setCellValueFactory(new PropertyValueFactory<>("numberOfCompletedExaminations"));
         colTotalRevenue.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
         tableReport1.setItems(doctorPerformances);
+        tableReport1.setPlaceholder(new Label(""));
 
         // Initialize Report 2 Table
         colMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
         colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         colRevenue2.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
         tableReport2.setItems(monthlyRevenues);
+        tableReport2.setPlaceholder(new Label(""));
 
         // Medicine selection listener
         tableMedicine.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
@@ -188,11 +196,13 @@ public class MainController {
         btnUpdateMedicine.setOnAction(e -> onUpdateMedicine());
         btnDeleteMedicine.setOnAction(e -> onDeleteMedicine());
         btnSearchMedicine.setOnAction(e -> onSearchMedicine());
+        btnResetMedicine.setOnAction(e -> onResetMedicine());
 
         btnAddProcedure.setOnAction(e -> onAddProcedure());
         btnUpdateProcedure.setOnAction(e -> onUpdateProcedure());
         btnDeleteProcedure.setOnAction(e -> onDeleteProcedure());
         btnSearchProcedure.setOnAction(e -> onSearchProcedure());
+        btnResetProcedure.setOnAction(e -> onResetProcedure());
 
         btnSearchReport1.setOnAction(e -> onSearchReport1());
 
@@ -300,6 +310,10 @@ public class MainController {
         txtStrength.clear();
         txtUnit.clear();
         tableMedicine.getSelectionModel().clearSelection();
+    }
+
+    private void onResetMedicine() {
+        clearMedicineForm();
     }
 
     // Procedure Catalog Methods
@@ -432,6 +446,10 @@ public class MainController {
         txtDescription.clear();
         txtDefaultPrice.clear();
         tableProcedureCatalog.getSelectionModel().clearSelection();
+    }
+
+    private void onResetProcedure() {
+        clearProcedureForm();
     }
 
     // Utility Methods
