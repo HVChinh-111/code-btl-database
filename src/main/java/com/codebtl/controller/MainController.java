@@ -1,9 +1,9 @@
 package com.codebtl.controller;
 
-import com.codebtl.model.Encounter;
-import com.codebtl.model.EncounterDAO;
 import com.codebtl.model.Medicine;
 import com.codebtl.model.MedicineDAO;
+import com.codebtl.model.ProcedureCatalog;
+import com.codebtl.model.ProcedureCatalogDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,55 +14,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 public class MainController {
-
-    // Encounter Tab Components
-    @FXML
-    private TableView<Encounter> tableEncounter;
-    @FXML
-    private TableColumn<Encounter, String> colEncounterID;
-    @FXML
-    private TableColumn<Encounter, String> colAppointmentID;
-    @FXML
-    private TableColumn<Encounter, String> colChiefComplaint;
-    @FXML
-    private TableColumn<Encounter, String> colDiagnosis;
-    @FXML
-    private TableColumn<Encounter, String> colNotes;
-    @FXML
-    private TableColumn<Encounter, String> colStartTime;
-    @FXML
-    private TableColumn<Encounter, String> colEndTime;
-    @FXML
-    private TableColumn<Encounter, String> colFee;
-
-    @FXML
-    private TextField txtEncounterID;
-    @FXML
-    private TextField txtAppointmentID;
-    @FXML
-    private TextField txtChiefComplaint;
-    @FXML
-    private TextField txtDiagnosis;
-    @FXML
-    private TextField txtNotes;
-    @FXML
-    private TextField txtStartTime;
-    @FXML
-    private TextField txtEndTime;
-    @FXML
-    private TextField txtFee;
-
-    @FXML
-    private Button btnAddEncounter;
-    @FXML
-    private Button btnUpdateEncounter;
-    @FXML
-    private Button btnDeleteEncounter;
-    @FXML
-    private Button btnSearchEncounter;
 
     // Medicine Tab Components
     @FXML
@@ -70,7 +24,7 @@ public class MainController {
     @FXML
     private TableColumn<Medicine, String> colMedicineID;
     @FXML
-    private TableColumn<Medicine, String> colProcedureCatalogName;
+    private TableColumn<Medicine, String> colName;
     @FXML
     private TableColumn<Medicine, String> colStrength;
     @FXML
@@ -84,8 +38,6 @@ public class MainController {
     private TextField txtStrength;
     @FXML
     private TextField txtUnit;
-    @FXML
-    private TextField txtMedicineFee;
 
     @FXML
     private Button btnAddMedicine;
@@ -96,44 +48,61 @@ public class MainController {
     @FXML
     private Button btnSearchMedicine;
 
-    private final EncounterDAO encounterDAO = new EncounterDAO();
+    // Procedure Catalog Tab Components
+    @FXML
+    private TableView<ProcedureCatalog> tableProcedureCatalog;
+    @FXML
+    private TableColumn<ProcedureCatalog, String> colProcedureID;
+    @FXML
+    private TableColumn<ProcedureCatalog, String> colProcedureName;
+    @FXML
+    private TableColumn<ProcedureCatalog, String> colType;
+    @FXML
+    private TableColumn<ProcedureCatalog, String> colDescription;
+    @FXML
+    private TableColumn<ProcedureCatalog, BigDecimal> colDefaultPrice;
+
+    @FXML
+    private TextField txtProcedureID;
+    @FXML
+    private TextField txtProcedureName;
+    @FXML
+    private TextField txtType;
+    @FXML
+    private TextField txtDescription;
+    @FXML
+    private TextField txtDefaultPrice;
+
+    @FXML
+    private Button btnAddProcedure;
+    @FXML
+    private Button btnUpdateProcedure;
+    @FXML
+    private Button btnDeleteProcedure;
+    @FXML
+    private Button btnSearchProcedure;
+
     private final MedicineDAO medicineDAO = new MedicineDAO();
-    private final ObservableList<Encounter> encounters = FXCollections.observableArrayList();
+    private final ProcedureCatalogDAO procedureCatalogDAO = new ProcedureCatalogDAO();
     private final ObservableList<Medicine> medicines = FXCollections.observableArrayList();
+    private final ObservableList<ProcedureCatalog> procedures = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Initialize Encounter Table
-        colEncounterID.setCellValueFactory(new PropertyValueFactory<>("encounterId"));
-        colAppointmentID.setCellValueFactory(new PropertyValueFactory<>("appId"));
-        colChiefComplaint.setCellValueFactory(new PropertyValueFactory<>("symptom"));
-        colDiagnosis.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
-        colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-        colStartTime.setCellValueFactory(new PropertyValueFactory<>("startTimeString"));
-        colEndTime.setCellValueFactory(new PropertyValueFactory<>("endTimeString"));
-        colFee.setCellValueFactory(new PropertyValueFactory<>("status"));
-        tableEncounter.setItems(encounters);
-
         // Initialize Medicine Table
         colMedicineID.setCellValueFactory(new PropertyValueFactory<>("medicineId"));
-        colProcedureCatalogName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colStrength.setCellValueFactory(new PropertyValueFactory<>("strength"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tableMedicine.setItems(medicines);
 
-        // Encounter selection listener
-        tableEncounter.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
-            if (newSel != null) {
-                txtEncounterID.setText(newSel.getEncounterId());
-                txtAppointmentID.setText(newSel.getAppId());
-                txtChiefComplaint.setText(newSel.getSymptom());
-                txtDiagnosis.setText(newSel.getDiagnosis());
-                txtNotes.setText(newSel.getNotes());
-                txtStartTime.setText(newSel.getStartTimeString());
-                txtEndTime.setText(newSel.getEndTimeString());
-                txtFee.setText(newSel.getStatus());
-            }
-        });
+        // Initialize Procedure Catalog Table
+        colProcedureID.setCellValueFactory(new PropertyValueFactory<>("procedureId"));
+        colProcedureName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colDefaultPrice.setCellValueFactory(new PropertyValueFactory<>("defaultPrice"));
+        tableProcedureCatalog.setItems(procedures);
 
         // Medicine selection listener
         tableMedicine.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
@@ -145,167 +114,31 @@ public class MainController {
             }
         });
 
-        // Set button actions
-        btnAddEncounter.setOnAction(e -> onAddEncounter());
-        btnUpdateEncounter.setOnAction(e -> onUpdateEncounter());
-        btnDeleteEncounter.setOnAction(e -> onDeleteEncounter());
-        btnSearchEncounter.setOnAction(e -> onSearchEncounter());
+        // Procedure Catalog selection listener
+        tableProcedureCatalog.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                txtProcedureID.setText(newSel.getProcedureId());
+                txtProcedureName.setText(newSel.getName());
+                txtType.setText(newSel.getType());
+                txtDescription.setText(newSel.getDescription());
+                txtDefaultPrice.setText(newSel.getDefaultPrice() != null ? newSel.getDefaultPrice().toString() : "");
+            }
+        });
 
+        // Set button actions
         btnAddMedicine.setOnAction(e -> onAddMedicine());
         btnUpdateMedicine.setOnAction(e -> onUpdateMedicine());
         btnDeleteMedicine.setOnAction(e -> onDeleteMedicine());
         btnSearchMedicine.setOnAction(e -> onSearchMedicine());
 
+        btnAddProcedure.setOnAction(e -> onAddProcedure());
+        btnUpdateProcedure.setOnAction(e -> onUpdateProcedure());
+        btnDeleteProcedure.setOnAction(e -> onDeleteProcedure());
+        btnSearchProcedure.setOnAction(e -> onSearchProcedure());
+
         // Load initial data
-        loadEncounterTable();
         loadMedicineTable();
-    }
-
-    // Encounter Methods
-    private void onAddEncounter() {
-        String encounterId = txtEncounterID.getText();
-        String appId = txtAppointmentID.getText();
-        String symptom = txtChiefComplaint.getText();
-        String diagnosis = txtDiagnosis.getText();
-        String notes = txtNotes.getText();
-        String startTimeStr = txtStartTime.getText();
-        String endTimeStr = txtEndTime.getText();
-        String status = txtFee.getText();
-
-        if (encounterId == null || encounterId.isBlank()) {
-            showError("Vui lòng nhập Encounter ID");
-            return;
-        }
-        if (appId == null || appId.isBlank()) {
-            showError("Vui lòng nhập Appointment ID");
-            return;
-        }
-
-        Timestamp startTime = null;
-        Timestamp endTime = null;
-        
-        try {
-            if (startTimeStr != null && !startTimeStr.isBlank()) {
-                startTime = Timestamp.valueOf(startTimeStr.trim());
-            }
-            if (endTimeStr != null && !endTimeStr.isBlank()) {
-                endTime = Timestamp.valueOf(endTimeStr.trim());
-            }
-        } catch (IllegalArgumentException e) {
-            showError("Định dạng thời gian không hợp lệ. Sử dụng: yyyy-MM-dd HH:mm:ss");
-            return;
-        }
-
-        Encounter encounter = new Encounter(
-                encounterId.trim(), appId.trim(), startTime, endTime,
-                diagnosis != null ? diagnosis.trim() : "",
-                symptom != null ? symptom.trim() : "", 
-                notes != null ? notes.trim() : "",
-                status != null ? status.trim() : "", ""
-        );
-
-        boolean success = encounterDAO.insertEncounter(encounter);
-        if (!success) {
-            showError("Encounter ID đã tồn tại! Vui lòng nhập mã khác.");
-            return;
-        }
-
-        clearEncounterForm();
-        loadEncounterTable();
-        showInfo("Thêm encounter thành công!");
-    }
-
-    private void onUpdateEncounter() {
-        Encounter selected = tableEncounter.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showError("Hãy chọn một encounter trong bảng để cập nhật");
-            return;
-        }
-
-        String encounterId = txtEncounterID.getText();
-        String appId = txtAppointmentID.getText();
-        String symptom = txtChiefComplaint.getText();
-        String diagnosis = txtDiagnosis.getText();
-        String notes = txtNotes.getText();
-        String startTimeStr = txtStartTime.getText();
-        String endTimeStr = txtEndTime.getText();
-        String status = txtFee.getText();
-
-        if (encounterId == null || encounterId.isBlank()) {
-            showError("Vui lòng nhập Encounter ID");
-            return;
-        }
-        if (appId == null || appId.isBlank()) {
-            showError("Vui lòng nhập Appointment ID");
-            return;
-        }
-
-        Timestamp startTime = null;
-        Timestamp endTime = null;
-        
-        try {
-            if (startTimeStr != null && !startTimeStr.isBlank()) {
-                startTime = Timestamp.valueOf(startTimeStr.trim());
-            }
-            if (endTimeStr != null && !endTimeStr.isBlank()) {
-                endTime = Timestamp.valueOf(endTimeStr.trim());
-            }
-        } catch (IllegalArgumentException e) {
-            showError("Định dạng thời gian không hợp lệ. Sử dụng: yyyy-MM-dd HH:mm:ss");
-            return;
-        }
-
-        selected.setEncounterId(encounterId.trim());
-        selected.setAppId(appId.trim());
-        selected.setSymptom(symptom != null ? symptom.trim() : "");
-        selected.setDiagnosis(diagnosis != null ? diagnosis.trim() : "");
-        selected.setNotes(notes != null ? notes.trim() : "");
-        selected.setStartTime(startTime);
-        selected.setEndTime(endTime);
-        selected.setStatus(status != null ? status.trim() : "");
-
-        encounterDAO.updateEncounter(selected);
-        clearEncounterForm();
-        loadEncounterTable();
-        showInfo("Cập nhật encounter thành công!");
-    }
-
-    private void onDeleteEncounter() {
-        Encounter selected = tableEncounter.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showError("Hãy chọn một encounter trong bảng để xóa");
-            return;
-        }
-
-        encounterDAO.deleteEncounter(selected.getEncounterId());
-        clearEncounterForm();
-        loadEncounterTable();
-        showInfo("Xóa encounter thành công!");
-    }
-
-    private void onSearchEncounter() {
-        String keyword = txtEncounterID.getText();
-        if (keyword == null || keyword.isBlank()) {
-            loadEncounterTable();
-        } else {
-            encounters.setAll(encounterDAO.searchEncounters(keyword.trim()));
-        }
-    }
-
-    private void loadEncounterTable() {
-        encounters.setAll(encounterDAO.getAllEncounters());
-    }
-
-    private void clearEncounterForm() {
-        txtEncounterID.clear();
-        txtAppointmentID.clear();
-        txtChiefComplaint.clear();
-        txtDiagnosis.clear();
-        txtNotes.clear();
-        txtStartTime.clear();
-        txtEndTime.clear();
-        txtFee.clear();
-        tableEncounter.getSelectionModel().clearSelection();
+        loadProcedureCatalogTable();
     }
 
     // Medicine Methods
@@ -404,8 +237,139 @@ public class MainController {
         txtMedicineName.clear();
         txtStrength.clear();
         txtUnit.clear();
-        txtMedicineFee.clear();
         tableMedicine.getSelectionModel().clearSelection();
+    }
+
+    // Procedure Catalog Methods
+    private void onAddProcedure() {
+        String procedureId = txtProcedureID.getText();
+        String name = txtProcedureName.getText();
+        String type = txtType.getText();
+        String description = txtDescription.getText();
+        String priceStr = txtDefaultPrice.getText();
+
+        if (procedureId == null || procedureId.isBlank()) {
+            showError("Vui lòng nhập Procedure ID");
+            return;
+        }
+        if (name == null || name.isBlank()) {
+            showError("Vui lòng nhập Name");
+            return;
+        }
+
+        BigDecimal price = null;
+        if (priceStr != null && !priceStr.isBlank()) {
+            try {
+                price = new BigDecimal(priceStr.trim());
+                if (price.compareTo(BigDecimal.ZERO) < 0) {
+                    showError("Giá phải là số dương");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showError("Giá không hợp lệ");
+                return;
+            }
+        }
+
+        ProcedureCatalog procedure = new ProcedureCatalog(
+                procedureId.trim(), name.trim(),
+                type != null ? type.trim() : "",
+                description != null ? description.trim() : "",
+                price
+        );
+
+        boolean success = procedureCatalogDAO.insertProcedureCatalog(procedure);
+        if (!success) {
+            showError("Procedure ID đã tồn tại! Vui lòng nhập mã khác.");
+            return;
+        }
+
+        clearProcedureForm();
+        loadProcedureCatalogTable();
+        showInfo("Thêm procedure catalog thành công!");
+    }
+
+    private void onUpdateProcedure() {
+        ProcedureCatalog selected = tableProcedureCatalog.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showError("Hãy chọn một procedure trong bảng để cập nhật");
+            return;
+        }
+
+        String procedureId = txtProcedureID.getText();
+        String name = txtProcedureName.getText();
+        String type = txtType.getText();
+        String description = txtDescription.getText();
+        String priceStr = txtDefaultPrice.getText();
+
+        if (procedureId == null || procedureId.isBlank()) {
+            showError("Vui lòng nhập Procedure ID");
+            return;
+        }
+        if (name == null || name.isBlank()) {
+            showError("Vui lòng nhập Name");
+            return;
+        }
+
+        BigDecimal price = null;
+        if (priceStr != null && !priceStr.isBlank()) {
+            try {
+                price = new BigDecimal(priceStr.trim());
+                if (price.compareTo(BigDecimal.ZERO) < 0) {
+                    showError("Giá phải là số dương");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showError("Giá không hợp lệ");
+                return;
+            }
+        }
+
+        selected.setProcedureId(procedureId.trim());
+        selected.setName(name.trim());
+        selected.setType(type != null ? type.trim() : "");
+        selected.setDescription(description != null ? description.trim() : "");
+        selected.setDefaultPrice(price);
+
+        procedureCatalogDAO.updateProcedureCatalog(selected);
+        clearProcedureForm();
+        loadProcedureCatalogTable();
+        showInfo("Cập nhật procedure catalog thành công!");
+    }
+
+    private void onDeleteProcedure() {
+        ProcedureCatalog selected = tableProcedureCatalog.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showError("Hãy chọn một procedure trong bảng để xóa");
+            return;
+        }
+
+        procedureCatalogDAO.deleteProcedureCatalog(selected.getProcedureId());
+        clearProcedureForm();
+        loadProcedureCatalogTable();
+        showInfo("Xóa procedure catalog thành công!");
+    }
+
+    private void onSearchProcedure() {
+        String keyword = txtProcedureID.getText();
+        if (keyword == null || keyword.isBlank()) {
+            loadProcedureCatalogTable();
+        } else {
+            procedures.setAll(procedureCatalogDAO.searchProcedureCatalogs(keyword.trim()));
+        }
+    }
+
+    private void loadProcedureCatalogTable() {
+        procedures.setAll(procedureCatalogDAO.getAllProcedureCatalogs());
+    }
+
+    private void clearProcedureForm() {
+        txtProcedureID.clear();
+        txtProcedureName.clear();
+        txtType.clear();
+        txtDescription.clear();
+        txtDefaultPrice.clear();
+        tableProcedureCatalog.getSelectionModel().clearSelection();
     }
 
     // Utility Methods
