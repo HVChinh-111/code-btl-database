@@ -1,4 +1,5 @@
-USE btl;
+CREATE DATABASE IF NOT EXISTS btl_database1;
+USE btl_database1;
 
 -- 1. personss
 CREATE TABLE IF NOT EXISTS persons
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS doctors
 (
     d_person CHAR(10) PRIMARY KEY,
     speciality VARCHAR(30),
-    level VARCHAR(15),
+    level ENUM('STANDARD', 'PROFESSOR'),
     FOREIGN KEY (d_person) REFERENCES persons(person_id)
 );
 
@@ -147,6 +148,6 @@ CREATE TABLE IF NOT EXISTS payments
     encounter_id CHAR(10),
     amount DECIMAL(10,2),
     method VARCHAR(20),
-    status VARCHAR(15),
+    pay_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (encounter_id) REFERENCES encounters(encounter_id)
 );

@@ -4,17 +4,18 @@ import com.codebtl.model.Medicine;
 import com.codebtl.model.MedicineDAO;
 import com.codebtl.model.ProcedureCatalog;
 import com.codebtl.model.ProcedureCatalogDAO;
+import com.codebtl.model.DoctorPerformance;
+import com.codebtl.model.DoctorPerformanceDAO;
+import com.codebtl.model.MonthlyRevenue;
+import com.codebtl.model.MonthlyRevenueDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class MainController {
 
@@ -82,10 +83,52 @@ public class MainController {
     @FXML
     private Button btnSearchProcedure;
 
+    // Report 1 Tab Components
+    @FXML
+    private TableView<DoctorPerformance> tableReport1;
+    @FXML
+    private TableColumn<DoctorPerformance, String> colDoctorID;
+    @FXML
+    private TableColumn<DoctorPerformance, String> colDoctorName;
+    @FXML
+    private TableColumn<DoctorPerformance, LocalDate> colDOB;
+    @FXML
+    private TableColumn<DoctorPerformance, Integer> colNumberOfPatients;
+    @FXML
+    private TableColumn<DoctorPerformance, Integer> colNumberOfCompletedExaminations;
+    @FXML
+    private TableColumn<DoctorPerformance, BigDecimal> colTotalRevenue;
+
+    @FXML
+    private DatePicker datePickerStartReport1;
+    @FXML
+    private DatePicker datePickerEndReport1;
+    @FXML
+    private Button btnSearchReport1;
+    @FXML
+    private Label lblTotalRevenueReport1;
+
+    // Report 2 Tab Components
+    @FXML
+    private TableView<MonthlyRevenue> tableReport2;
+    @FXML
+    private TableColumn<MonthlyRevenue, Integer> colMonth;
+    @FXML
+    private TableColumn<MonthlyRevenue, Integer> colYear;
+    @FXML
+    private TableColumn<MonthlyRevenue, BigDecimal> colRevenue2;
+
+    @FXML
+    private Button btnSearchReport2;
+
     private final MedicineDAO medicineDAO = new MedicineDAO();
     private final ProcedureCatalogDAO procedureCatalogDAO = new ProcedureCatalogDAO();
+    private final DoctorPerformanceDAO doctorPerformanceDAO = new DoctorPerformanceDAO();
+    private final MonthlyRevenueDAO monthlyRevenueDAO = new MonthlyRevenueDAO();
     private final ObservableList<Medicine> medicines = FXCollections.observableArrayList();
     private final ObservableList<ProcedureCatalog> procedures = FXCollections.observableArrayList();
+    private final ObservableList<DoctorPerformance> doctorPerformances = FXCollections.observableArrayList();
+    private final ObservableList<MonthlyRevenue> monthlyRevenues = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -103,6 +146,21 @@ public class MainController {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colDefaultPrice.setCellValueFactory(new PropertyValueFactory<>("defaultPrice"));
         tableProcedureCatalog.setItems(procedures);
+
+        // Initialize Report 1 Table
+        colDoctorID.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+        colDoctorName.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
+        colDOB.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+        colNumberOfPatients.setCellValueFactory(new PropertyValueFactory<>("numberOfPatients"));
+        colNumberOfCompletedExaminations.setCellValueFactory(new PropertyValueFactory<>("numberOfCompletedExaminations"));
+        colTotalRevenue.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
+        tableReport1.setItems(doctorPerformances);
+
+        // Initialize Report 2 Table
+        colMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
+        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
+        colRevenue2.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
+        tableReport2.setItems(monthlyRevenues);
 
         // Medicine selection listener
         tableMedicine.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
@@ -135,6 +193,10 @@ public class MainController {
         btnUpdateProcedure.setOnAction(e -> onUpdateProcedure());
         btnDeleteProcedure.setOnAction(e -> onDeleteProcedure());
         btnSearchProcedure.setOnAction(e -> onSearchProcedure());
+
+        btnSearchReport1.setOnAction(e -> onSearchReport1());
+
+        btnSearchReport2.setOnAction(e -> onSearchReport2());
 
         // Load initial data
         loadMedicineTable();
@@ -387,5 +449,44 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // Report 1 Methods
+    private void onSearchReport1() {
+        LocalDate startDate = datePickerStartReport1.getValue();
+        LocalDate endDate = datePickerEndReport1.getValue();
+
+        if (startDate == null || endDate == null) {
+            showError("Vui lòng chọn cả ngày bắt đầu và ngày kết thúc");
+            return;
+        }
+
+        if (startDate.isAfter(endDate)) {
+            showError("Ngày bắt đầu phải trước ngày kết thúc");
+            return;
+        }
+
+        // Load data from database
+        var performances = doctorPerformanceDAO.getDoctorPerformanceReport(startDate, endDate);
+        doctorPerformances.setAll(performances);
+
+        // Calculate and display total revenue
+        BigDecimal totalRevenue = doctorPerformanceDAO.calculateTotalRevenue(performances);
+        lblTotalRevenueReport1.setText(String.format("%.2f $", totalRevenue));
+
+        showInfo("Đã tải báo cáo thành công!");
+    }
+
+    // Report 2 Methods
+    private void onSearchReport2() {
+        // Load all monthly revenue data
+        var revenues = monthlyRevenueDAO.getMonthlyRevenueReport();
+        monthlyRevenues.setAll(revenues);
+
+        if (revenues.isEmpty()) {
+            showInfo("Không có dữ liệu doanh thu trong cơ sở dữ liệu");
+        } else {
+            showInfo("Đã tải báo cáo doanh thu theo tháng thành công!");
+        }
     }
 }
