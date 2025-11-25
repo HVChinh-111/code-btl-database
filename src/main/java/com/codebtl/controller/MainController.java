@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 public class MainController {
@@ -133,6 +134,20 @@ public class MainController {
     private final ObservableList<ProcedureCatalog> procedures = FXCollections.observableArrayList();
     private final ObservableList<DoctorPerformance> doctorPerformances = FXCollections.observableArrayList();
     private final ObservableList<MonthlyRevenue> monthlyRevenues = FXCollections.observableArrayList();
+    
+    // Formatter cho tiền: xxx.xxx.xxx (không có số thập phân)
+    private final DecimalFormat currencyFormatter = new DecimalFormat("#,###");
+    
+    /**
+     * Format số tiền theo dịnh dạng Việt Nam: xxx.xxx.xxx
+     * @param value Giá trị BigDecimal
+     * @return Chuỗi đã format
+     */
+    private String formatCurrency(BigDecimal value) {
+        if (value == null) return "0";
+        // DecimalFormat sử dụng dấu phẩy, thay bằng dấu chấm
+        return currencyFormatter.format(value.longValue()).replace(',', '.');
+    }
 
     @FXML
     public void initialize() {
@@ -150,6 +165,18 @@ public class MainController {
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colDefaultPrice.setCellValueFactory(new PropertyValueFactory<>("defaultPrice"));
+        // Format cột giá tiền
+        colDefaultPrice.setCellFactory(column -> new TableCell<ProcedureCatalog, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(formatCurrency(item));
+                }
+            }
+        });
         tableProcedureCatalog.setItems(procedures);
         tableProcedureCatalog.setPlaceholder(new Label(""));
 
@@ -160,6 +187,18 @@ public class MainController {
         colNumberOfPatients.setCellValueFactory(new PropertyValueFactory<>("numberOfPatients"));
         colNumberOfCompletedExaminations.setCellValueFactory(new PropertyValueFactory<>("numberOfCompletedExaminations"));
         colTotalRevenue.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
+        // Format cột doanh thu
+        colTotalRevenue.setCellFactory(column -> new TableCell<DoctorPerformance, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(formatCurrency(item));
+                }
+            }
+        });
         tableReport1.setItems(doctorPerformances);
         tableReport1.setPlaceholder(new Label(""));
 
@@ -167,6 +206,18 @@ public class MainController {
         colMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
         colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
         colRevenue2.setCellValueFactory(new PropertyValueFactory<>("totalRevenue"));
+        // Format cột doanh thu
+        colRevenue2.setCellFactory(column -> new TableCell<MonthlyRevenue, BigDecimal>() {
+            @Override
+            protected void updateItem(BigDecimal item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(formatCurrency(item));
+                }
+            }
+        });
         tableReport2.setItems(monthlyRevenues);
         tableReport2.setPlaceholder(new Label(""));
 
@@ -474,7 +525,7 @@ public class MainController {
 
         // Calculate and display total revenue
         BigDecimal totalRevenue = doctorPerformanceDAO.calculateTotalRevenue(performances);
-        lblTotalRevenueReport1.setText(String.format("%.2f $", totalRevenue));
+        lblTotalRevenueReport1.setText(formatCurrency(totalRevenue) + " VNĐ");
 
         showInfo("Đã tải báo cáo thành công!");
     }

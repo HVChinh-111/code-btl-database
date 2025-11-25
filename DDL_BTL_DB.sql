@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS appointments
     s_person_id INT,
     p_person_id INT,
     slot_id INT,
-    status ENUM('BOOKED', 'CONFIRMED', 'CHECKED_IN', 'COMPLETED', 'CANCELLED', 'NO_SHOW'),
+    status ENUM('BOOKED', 'CHECKED_IN', 'CANCELLED', 'NO_SHOW'),
     FOREIGN KEY (s_person_id) REFERENCES staffs(s_person_id),
     FOREIGN KEY (p_person_id) REFERENCES patients(p_person_id),
     FOREIGN KEY (slot_id) REFERENCES time_slots(slot_id)
