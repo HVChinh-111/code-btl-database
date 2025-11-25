@@ -143,8 +143,10 @@ CREATE TABLE IF NOT EXISTS payments
 (
     payment_id INT PRIMARY KEY AUTO_INCREMENT,
     encounter_id INT,
+    s_person_id INT,
     amount DECIMAL(10,2),
     method ENUM ('CASH', 'CARD', 'EWALLET'),
     pay_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (encounter_id) REFERENCES encounters(encounter_id)
+    FOREIGN KEY (encounter_id) REFERENCES encounters(encounter_id),
+    FOREIGN KEY (s_person_id) REFERENCES staffs(s_person_id)
 );

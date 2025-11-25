@@ -357,6 +357,7 @@ public class MainController {
 
     private void onResetMedicine() {
         clearMedicineForm();
+        loadMedicineTable();
     }
 
     // Procedure Catalog Methods
@@ -485,6 +486,7 @@ public class MainController {
 
     private void onResetProcedure() {
         clearProcedureForm();
+        loadProcedureCatalogTable();
     }
 
     // Utility Methods

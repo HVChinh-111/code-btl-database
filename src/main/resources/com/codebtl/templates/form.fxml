@@ -22,10 +22,10 @@
                         <!-- TableView -->
                         <TableView fx:id="tableMedicine" prefHeight="440.0" prefWidth="1260.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn fx:id="colMedicineID" prefWidth="130.0" text="Medicine ID" />
-                                <TableColumn fx:id="colName" prefWidth="450.0" text="Name" />
-                                <TableColumn fx:id="colStrength" prefWidth="380.0" text="Strength" />
-                                <TableColumn fx:id="colUnit" prefWidth="299.0" text="Unit" />
+                                <TableColumn fx:id="colMedicineID" prefWidth="125.0" text="Medicine ID" />
+                                <TableColumn fx:id="colName" prefWidth="435.0" text="Name" />
+                                <TableColumn fx:id="colStrength" prefWidth="347.99993896484375" text="Strength" />
+                                <TableColumn fx:id="colUnit" prefWidth="289.33343505859375" text="Unit" />
                             </columns>
                         </TableView>
 
@@ -76,11 +76,11 @@
                <children>
                   <TableView fx:id="tableProcedureCatalog" prefHeight="440.0" prefWidth="1232.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="colProcedureID" prefWidth="121.33333051204681" text="Procedure ID" />
-                        <TableColumn fx:id="colProcedureName" prefWidth="305.8666763305664" text="Name" />
-                        <TableColumn fx:id="colType" prefWidth="112.5333251953125" text="Type" />
-                        <TableColumn fx:id="colDescription" prefWidth="461.333251953125" text="Description" />
-                        <TableColumn fx:id="colDefaultPrice" prefWidth="261.86669921875" text="Default Price" />
+                        <TableColumn fx:id="colProcedureID" prefWidth="115.0" text="Procedure ID" />
+                        <TableColumn fx:id="colProcedureName" prefWidth="290.0" text="Name" />
+                        <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
+                        <TableColumn fx:id="colDescription" prefWidth="440.0" text="Description" />
+                        <TableColumn fx:id="colDefaultPrice" prefWidth="254.0" text="Default Price" />
                      </columns>
                   </TableView>
                   <Label layoutX="15.0" layoutY="470.0" prefHeight="26.0" prefWidth="120.0" text="Procedure ID">
@@ -148,9 +148,9 @@
                <children>
                   <TableView fx:id="tableReport2" layoutX="3.0" prefHeight="569.0" prefWidth="1260.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <columns>
-                        <TableColumn fx:id="colMonth" prefWidth="284.79998779296875" text="Month" />
-                        <TableColumn fx:id="colYear" prefWidth="316.79998779296875" text="Year" />
-                        <TableColumn fx:id="colRevenue2" prefWidth="656.0" text="Total Revenue" />
+                        <TableColumn fx:id="colMonth" prefWidth="275.0" text="Month" />
+                        <TableColumn fx:id="colYear" prefWidth="310.0" text="Year" />
+                        <TableColumn fx:id="colRevenue2" prefWidth="615.3333129882812" text="Total Revenue" />
                      </columns>
                   </TableView>
                   <Label layoutX="592.0" layoutY="608.0" prefHeight="27.0" prefWidth="211.0" text="Monthly revenue report">
@@ -172,12 +172,12 @@
                <children>
                   <TableView fx:id="tableReport1" layoutX="3.0" prefHeight="440.0" prefWidth="1274.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <columns>
-                        <TableColumn fx:id="colDoctorID" prefWidth="126.66668224334717" text="Doctor ID" />
-                        <TableColumn fx:id="colDoctorName" prefWidth="215.33335876464844" text="Name" />
-                        <TableColumn fx:id="colDOB" prefWidth="147.3333740234375" text="Date of Birth" />
-                        <TableColumn fx:id="colNumberOfPatients" prefWidth="262.6667785644531" text="Number of patients" />
-                        <TableColumn fx:id="colNumberOfCompletedExaminations" prefWidth="275.33331298828125" text="Number of completed examinations" />
-                        <TableColumn fx:id="colTotalRevenue" prefWidth="234.6666259765625" text="Total revenue" />
+                        <TableColumn fx:id="colDoctorID" prefWidth="120.0" text="Doctor ID" />
+                        <TableColumn fx:id="colDoctorName" prefWidth="200.0" text="Name" />
+                        <TableColumn fx:id="colDOB" prefWidth="140.0" text="Date of Birth" />
+                        <TableColumn fx:id="colNumberOfPatients" prefWidth="240.0" text="Number of patients" />
+                        <TableColumn fx:id="colNumberOfCompletedExaminations" prefWidth="260.0" text="Number of completed examinations" />
+                        <TableColumn fx:id="colTotalRevenue" prefWidth="236.6666259765625" text="Total revenue" />
                      </columns>
                   </TableView>
                   <Label layoutX="35.0" layoutY="571.0" prefHeight="27.0" prefWidth="200.0" text="Total revenue of all doctors:">
