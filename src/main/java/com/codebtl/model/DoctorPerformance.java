@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DoctorPerformance {
-    private String doctorId;
+    private int doctorId;
     private String doctorName;
     private LocalDate dateOfBirth;
     private int numberOfPatients;
@@ -14,7 +14,7 @@ public class DoctorPerformance {
     public DoctorPerformance() {
     }
 
-    public DoctorPerformance(String doctorId, String doctorName, LocalDate dateOfBirth, 
+    public DoctorPerformance(int doctorId, String doctorName, LocalDate dateOfBirth, 
                             int numberOfPatients, int numberOfCompletedExaminations, 
                             BigDecimal totalRevenue) {
         this.doctorId = doctorId;
@@ -25,12 +25,17 @@ public class DoctorPerformance {
         this.totalRevenue = totalRevenue;
     }
 
-    public String getDoctorId() {
+    public int getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(String doctorId) {
+    public void setDoctorId(int doctorId) {
         this.doctorId = doctorId;
+    }
+    
+    // Format ID as DOC + 7 digits
+    public String getFormattedDoctorId() {
+        return String.format("DOC%07d", doctorId);
     }
 
     public String getDoctorName() {

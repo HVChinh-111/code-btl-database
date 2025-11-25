@@ -3,7 +3,7 @@ package com.codebtl.model;
 import java.math.BigDecimal;
 
 public class ProcedureCatalog {
-    private String procedureId;
+    private int procedureId;
     private String name;
     private String type;
     private String description;
@@ -12,7 +12,7 @@ public class ProcedureCatalog {
     public ProcedureCatalog() {
     }
 
-    public ProcedureCatalog(String procedureId, String name, String type, String description, BigDecimal defaultPrice) {
+    public ProcedureCatalog(int procedureId, String name, String type, String description, BigDecimal defaultPrice) {
         this.procedureId = procedureId;
         this.name = name;
         this.type = type;
@@ -20,12 +20,17 @@ public class ProcedureCatalog {
         this.defaultPrice = defaultPrice;
     }
 
-    public String getProcedureId() {
+    public int getProcedureId() {
         return procedureId;
     }
 
-    public void setProcedureId(String procedureId) {
+    public void setProcedureId(int procedureId) {
         this.procedureId = procedureId;
+    }
+    
+    // Format ID as PRO + 7 digits
+    public String getFormattedProcedureId() {
+        return String.format("PRO%07d", procedureId);
     }
 
     public String getName() {

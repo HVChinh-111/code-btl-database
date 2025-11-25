@@ -21,30 +21,24 @@ public class DoctorPerformanceDAO {
         
         String sql = """
             SELECT 
-                d.d_person AS doctor_id,
+                d.d_person_id AS doctor_id,
                 p.name AS doctor_name,
                 p.dob AS date_of_birth,
-                COUNT(DISTINCT a.p_person) AS number_of_patients,
+                COUNT(DISTINCT a.p_person_id) AS number_of_patients,
                 COUNT(CASE 
                     WHEN a.status = 'COMPLETED' THEN a.app_id 
                     ELSE NULL 
                 END) AS number_of_completed_examinations,
-                SUM(CASE 
-                    WHEN a.status = 'COMPLETED' THEN
-                        CASE 
-                            WHEN d.level = 'STANDARD' THEN 10.00
-                            WHEN d.level = 'PROFESSOR' THEN 20.00
-                            ELSE 0.00
-                        END
-                    ELSE 0.00
-                END) AS total_revenue
+                COALESCE(SUM(pay.amount), 0) AS total_revenue
             FROM doctors d
-            INNER JOIN persons p ON d.d_person = p.person_id
-            LEFT JOIN time_slots ts ON d.d_person = ts.d_person
+            INNER JOIN persons p ON d.d_person_id = p.person_id
+            LEFT JOIN time_slots ts ON d.d_person_id = ts.d_person_id
             LEFT JOIN appointments a ON ts.slot_id = a.slot_id 
                 AND ts.start_time >= ? 
                 AND ts.start_time <= ?
-            GROUP BY d.d_person, p.name, p.dob
+            LEFT JOIN encounters enc ON a.app_id = enc.app_id
+            LEFT JOIN payments pay ON enc.encounter_id = pay.encounter_id
+            GROUP BY d.d_person_id, p.name, p.dob
             ORDER BY total_revenue DESC, doctor_name ASC
             """;
         
@@ -58,7 +52,7 @@ public class DoctorPerformanceDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     DoctorPerformance performance = new DoctorPerformance();
-                    performance.setDoctorId(rs.getString("doctor_id"));
+                    performance.setDoctorId(rs.getInt("doctor_id"));
                     performance.setDoctorName(rs.getString("doctor_name"));
                     
                     Date dob = rs.getDate("date_of_birth");

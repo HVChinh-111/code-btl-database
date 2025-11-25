@@ -17,13 +17,13 @@ public class ProcedureCatalogDAO {
 
     public List<ProcedureCatalog> getAllProcedureCatalogs() {
         List<ProcedureCatalog> procedures = new ArrayList<>();
-        String sql = "SELECT procedure_id, name, type, description, default_price FROM procedure_catalogs ORDER BY procedure_id";
+        String sql = "SELECT procedure_id, name, type, description, default_price FROM procedure_catalogs WHERE is_active = TRUE ORDER BY procedure_id";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 ProcedureCatalog procedure = new ProcedureCatalog(
-                        rs.getString("procedure_id"),
+                        rs.getInt("procedure_id"),
                         rs.getString("name"),
                         rs.getString("type"),
                         rs.getString("description"),
@@ -38,19 +38,15 @@ public class ProcedureCatalogDAO {
     }
 
     public boolean insertProcedureCatalog(ProcedureCatalog procedure) {
-        String sql = "INSERT INTO procedure_catalogs(procedure_id, name, type, description, default_price) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO procedure_catalogs(name, type, description, default_price) VALUES(?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, procedure.getProcedureId());
-            ps.setString(2, procedure.getName());
-            ps.setString(3, procedure.getType());
-            ps.setString(4, procedure.getDescription());
-            ps.setBigDecimal(5, procedure.getDefaultPrice());
+            ps.setString(1, procedure.getName());
+            ps.setString(2, procedure.getType());
+            ps.setString(3, procedure.getDescription());
+            ps.setBigDecimal(4, procedure.getDefaultPrice());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                return false;
-            }
             throw new RuntimeException("Failed to insert procedure catalog", e);
         }
     }
@@ -63,40 +59,70 @@ public class ProcedureCatalogDAO {
             ps.setString(2, procedure.getType());
             ps.setString(3, procedure.getDescription());
             ps.setBigDecimal(4, procedure.getDefaultPrice());
-            ps.setString(5, procedure.getProcedureId());
+            ps.setInt(5, procedure.getProcedureId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Failed to update procedure catalog", e);
         }
     }
 
-    public boolean deleteProcedureCatalog(String procedureId) {
-        String sql = "DELETE FROM procedure_catalogs WHERE procedure_id = ?";
+    public boolean deleteProcedureCatalog(int procedureId) {
+        // Soft delete: chỉ đánh dấu is_active = false thay vì xóa hẳn
+        String sql = "UPDATE procedure_catalogs SET is_active = FALSE WHERE procedure_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, procedureId);
+            ps.setInt(1, procedureId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Failed to delete procedure catalog", e);
         }
     }
 
-    public List<ProcedureCatalog> searchProcedureCatalogs(String keyword) {
+    /**
+     * Tìm kiếm procedure catalog theo các thuộc tính (không bao gồm ID)
+     * Logic:
+     * - Bỏ qua các trường tìm kiếm rỗng (null hoặc blank)
+     * - Nếu nhiều trường được điền, tất cả phải khớp (AND logic)
+     * - Mỗi trường khớp khi chuỗi nhập là substring của giá trị trong DB
+     * 
+     * @param name Tên thủ thuật (có thể null)
+     * @param type Loại thủ thuật (có thể null)
+     * @param description Mô tả (có thể null)
+     * @return Danh sách procedure catalog khớp với tất cả điều kiện đã điền
+     */
+    public List<ProcedureCatalog> searchProcedureCatalogs(String name, String type, String description) {
         List<ProcedureCatalog> procedures = new ArrayList<>();
-        String sql = "SELECT procedure_id, name, type, description, default_price FROM procedure_catalogs " +
-                     "WHERE procedure_id LIKE ? OR name LIKE ? OR type LIKE ? OR description LIKE ? " +
-                     "ORDER BY procedure_id";
+        StringBuilder sql = new StringBuilder("SELECT procedure_id, name, type, description, default_price FROM procedure_catalogs WHERE is_active = TRUE");
+        List<String> params = new ArrayList<>();
+        
+        // Chỉ thêm điều kiện cho các trường không rỗng
+        if (name != null && !name.isBlank()) {
+            sql.append(" AND name LIKE ?");
+            params.add("%" + name.trim() + "%");
+        }
+        if (type != null && !type.isBlank()) {
+            sql.append(" AND type LIKE ?");
+            params.add("%" + type.trim() + "%");
+        }
+        if (description != null && !description.isBlank()) {
+            sql.append(" AND description LIKE ?");
+            params.add("%" + description.trim() + "%");
+        }
+        
+        sql.append(" ORDER BY procedure_id");
+        
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            String searchPattern = "%" + keyword + "%";
-            ps.setString(1, searchPattern);
-            ps.setString(2, searchPattern);
-            ps.setString(3, searchPattern);
-            ps.setString(4, searchPattern);
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            
+            // Set parameters
+            for (int i = 0; i < params.size(); i++) {
+                ps.setString(i + 1, params.get(i));
+            }
+            
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ProcedureCatalog procedure = new ProcedureCatalog(
-                        rs.getString("procedure_id"),
+                        rs.getInt("procedure_id"),
                         rs.getString("name"),
                         rs.getString("type"),
                         rs.getString("description"),

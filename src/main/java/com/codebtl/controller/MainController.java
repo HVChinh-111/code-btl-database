@@ -137,7 +137,7 @@ public class MainController {
     @FXML
     public void initialize() {
         // Initialize Medicine Table
-        colMedicineID.setCellValueFactory(new PropertyValueFactory<>("medicineId"));
+        colMedicineID.setCellValueFactory(new PropertyValueFactory<>("formattedMedicineId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colStrength.setCellValueFactory(new PropertyValueFactory<>("strength"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
@@ -145,7 +145,7 @@ public class MainController {
         tableMedicine.setPlaceholder(new Label(""));
 
         // Initialize Procedure Catalog Table
-        colProcedureID.setCellValueFactory(new PropertyValueFactory<>("procedureId"));
+        colProcedureID.setCellValueFactory(new PropertyValueFactory<>("formattedProcedureId"));
         colProcedureName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -154,7 +154,7 @@ public class MainController {
         tableProcedureCatalog.setPlaceholder(new Label(""));
 
         // Initialize Report 1 Table
-        colDoctorID.setCellValueFactory(new PropertyValueFactory<>("doctorId"));
+        colDoctorID.setCellValueFactory(new PropertyValueFactory<>("formattedDoctorId"));
         colDoctorName.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         colNumberOfPatients.setCellValueFactory(new PropertyValueFactory<>("numberOfPatients"));
@@ -173,7 +173,7 @@ public class MainController {
         // Medicine selection listener
         tableMedicine.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
-                txtMedicineID.setText(newSel.getMedicineId());
+                txtMedicineID.setText(newSel.getFormattedMedicineId());
                 txtMedicineName.setText(newSel.getName());
                 txtStrength.setText(newSel.getStrength());
                 txtUnit.setText(newSel.getUnit());
@@ -183,7 +183,7 @@ public class MainController {
         // Procedure Catalog selection listener
         tableProcedureCatalog.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
-                txtProcedureID.setText(newSel.getProcedureId());
+                txtProcedureID.setText(newSel.getFormattedProcedureId());
                 txtProcedureName.setText(newSel.getName());
                 txtType.setText(newSel.getType());
                 txtDescription.setText(newSel.getDescription());
@@ -215,32 +215,22 @@ public class MainController {
 
     // Medicine Methods
     private void onAddMedicine() {
-        String medicineId = txtMedicineID.getText();
         String name = txtMedicineName.getText();
         String strength = txtStrength.getText();
         String unit = txtUnit.getText();
 
-        if (medicineId == null || medicineId.isBlank()) {
-            showError("Vui lòng nhập Medicine ID");
-            return;
-        }
         if (name == null || name.isBlank()) {
             showError("Vui lòng nhập Name");
             return;
         }
 
         Medicine medicine = new Medicine(
-                medicineId.trim(), name.trim(),
+                0, name.trim(),
                 strength != null ? strength.trim() : "",
                 unit != null ? unit.trim() : ""
         );
 
-        boolean success = medicineDAO.insertMedicine(medicine);
-        if (!success) {
-            showError("Medicine ID đã tồn tại! Vui lòng nhập mã khác.");
-            return;
-        }
-
+        medicineDAO.insertMedicine(medicine);
         clearMedicineForm();
         loadMedicineTable();
         showInfo("Thêm medicine thành công!");
@@ -253,21 +243,15 @@ public class MainController {
             return;
         }
 
-        String medicineId = txtMedicineID.getText();
         String name = txtMedicineName.getText();
         String strength = txtStrength.getText();
         String unit = txtUnit.getText();
 
-        if (medicineId == null || medicineId.isBlank()) {
-            showError("Vui lòng nhập Medicine ID");
-            return;
-        }
         if (name == null || name.isBlank()) {
             showError("Vui lòng nhập Name");
             return;
         }
 
-        selected.setMedicineId(medicineId.trim());
         selected.setName(name.trim());
         selected.setStrength(strength != null ? strength.trim() : "");
         selected.setUnit(unit != null ? unit.trim() : "");
@@ -275,7 +259,7 @@ public class MainController {
         medicineDAO.updateMedicine(selected);
         clearMedicineForm();
         loadMedicineTable();
-        showInfo("Cập nhật medicine thành công!");
+        showInfo("Đã cập nhật medicine thành công!");
     }
 
     private void onDeleteMedicine() {
@@ -292,11 +276,19 @@ public class MainController {
     }
 
     private void onSearchMedicine() {
-        String keyword = txtMedicineID.getText();
-        if (keyword == null || keyword.isBlank()) {
+        // Lấy giá trị từ các trường nhập (bỏ qua ID vì nó chỉ hiển thị)
+        String name = txtMedicineName.getText();
+        String strength = txtStrength.getText();
+        String unit = txtUnit.getText();
+        
+        // Nếu tất cả trường đều rỗng, tải lại toàn bộ danh sách
+        if ((name == null || name.isBlank()) && 
+            (strength == null || strength.isBlank()) && 
+            (unit == null || unit.isBlank())) {
             loadMedicineTable();
         } else {
-            medicines.setAll(medicineDAO.searchMedicines(keyword.trim()));
+            // Tìm kiếm với các điều kiện đã nhập
+            medicines.setAll(medicineDAO.searchMedicines(name, strength, unit));
         }
     }
 
@@ -318,16 +310,11 @@ public class MainController {
 
     // Procedure Catalog Methods
     private void onAddProcedure() {
-        String procedureId = txtProcedureID.getText();
         String name = txtProcedureName.getText();
         String type = txtType.getText();
         String description = txtDescription.getText();
         String priceStr = txtDefaultPrice.getText();
 
-        if (procedureId == null || procedureId.isBlank()) {
-            showError("Vui lòng nhập Procedure ID");
-            return;
-        }
         if (name == null || name.isBlank()) {
             showError("Vui lòng nhập Name");
             return;
@@ -348,18 +335,13 @@ public class MainController {
         }
 
         ProcedureCatalog procedure = new ProcedureCatalog(
-                procedureId.trim(), name.trim(),
+                0, name.trim(),
                 type != null ? type.trim() : "",
                 description != null ? description.trim() : "",
                 price
         );
 
-        boolean success = procedureCatalogDAO.insertProcedureCatalog(procedure);
-        if (!success) {
-            showError("Procedure ID đã tồn tại! Vui lòng nhập mã khác.");
-            return;
-        }
-
+        procedureCatalogDAO.insertProcedureCatalog(procedure);
         clearProcedureForm();
         loadProcedureCatalogTable();
         showInfo("Thêm procedure catalog thành công!");
@@ -372,16 +354,11 @@ public class MainController {
             return;
         }
 
-        String procedureId = txtProcedureID.getText();
         String name = txtProcedureName.getText();
         String type = txtType.getText();
         String description = txtDescription.getText();
         String priceStr = txtDefaultPrice.getText();
 
-        if (procedureId == null || procedureId.isBlank()) {
-            showError("Vui lòng nhập Procedure ID");
-            return;
-        }
         if (name == null || name.isBlank()) {
             showError("Vui lòng nhập Name");
             return;
@@ -401,7 +378,6 @@ public class MainController {
             }
         }
 
-        selected.setProcedureId(procedureId.trim());
         selected.setName(name.trim());
         selected.setType(type != null ? type.trim() : "");
         selected.setDescription(description != null ? description.trim() : "");
@@ -410,7 +386,7 @@ public class MainController {
         procedureCatalogDAO.updateProcedureCatalog(selected);
         clearProcedureForm();
         loadProcedureCatalogTable();
-        showInfo("Cập nhật procedure catalog thành công!");
+        showInfo("Đã cập nhật procedure catalog thành công!");
     }
 
     private void onDeleteProcedure() {
@@ -427,11 +403,19 @@ public class MainController {
     }
 
     private void onSearchProcedure() {
-        String keyword = txtProcedureID.getText();
-        if (keyword == null || keyword.isBlank()) {
+        // Lấy giá trị từ các trường nhập (bỏ qua ID vì nó chỉ hiển thị)
+        String name = txtProcedureName.getText();
+        String type = txtType.getText();
+        String description = txtDescription.getText();
+        
+        // Nếu tất cả trường đều rỗng, tải lại toàn bộ danh sách
+        if ((name == null || name.isBlank()) && 
+            (type == null || type.isBlank()) && 
+            (description == null || description.isBlank())) {
             loadProcedureCatalogTable();
         } else {
-            procedures.setAll(procedureCatalogDAO.searchProcedureCatalogs(keyword.trim()));
+            // Tìm kiếm với các điều kiện đã nhập
+            procedures.setAll(procedureCatalogDAO.searchProcedureCatalogs(name, type, description));
         }
     }
 
@@ -497,14 +481,26 @@ public class MainController {
 
     // Report 2 Methods
     private void onSearchReport2() {
+        // Clear selection to prevent data loss on scroll
+        tableReport2.getSelectionModel().clearSelection();
+        
         // Load all monthly revenue data
         var revenues = monthlyRevenueDAO.getMonthlyRevenueReport();
-        monthlyRevenues.setAll(revenues);
+        
+        // Clear and reload data - tạo mới ObservableList để force reload
+        monthlyRevenues.clear();
+        monthlyRevenues.addAll(revenues);
+        
+        // Refresh table và set lại items để reload hoàn toàn
+        tableReport2.setItems(null);
+        tableReport2.layout();
+        tableReport2.setItems(monthlyRevenues);
+        tableReport2.refresh();
 
         if (revenues.isEmpty()) {
             showInfo("Không có dữ liệu doanh thu trong cơ sở dữ liệu");
         } else {
-            showInfo("Đã tải báo cáo doanh thu theo tháng thành công!");
+            showInfo("Đã tải " + revenues.size() + " bản ghi doanh thu theo tháng!");
         }
     }
 }

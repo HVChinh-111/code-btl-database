@@ -1,7 +1,7 @@
 package com.codebtl.model;
 
 public class Medicine {
-    private String medicineId;
+    private int medicineId;
     private String name;
     private String strength;
     private String unit;
@@ -9,19 +9,24 @@ public class Medicine {
     public Medicine() {
     }
 
-    public Medicine(String medicineId, String name, String strength, String unit) {
+    public Medicine(int medicineId, String name, String strength, String unit) {
         this.medicineId = medicineId;
         this.name = name;
         this.strength = strength;
         this.unit = unit;
     }
 
-    public String getMedicineId() {
+    public int getMedicineId() {
         return medicineId;
     }
 
-    public void setMedicineId(String medicineId) {
+    public void setMedicineId(int medicineId) {
         this.medicineId = medicineId;
+    }
+    
+    // Format ID as MED + 7 digits
+    public String getFormattedMedicineId() {
+        return String.format("MED%07d", medicineId);
     }
 
     public String getName() {

@@ -39,4 +39,17 @@ public class MonthlyRevenue {
     public void setTotalRevenue(BigDecimal totalRevenue) {
         this.totalRevenue = totalRevenue;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MonthlyRevenue that = (MonthlyRevenue) o;
+        return month == that.month && year == that.year;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * year + month;
+    }
 }
