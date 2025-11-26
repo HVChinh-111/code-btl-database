@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS persons
 
 -- 2. person_roles
 CREATE TABLE IF NOT EXISTS person_roles (
-  person_id INT NOT NULL UNIQUE,
+  person_id INT NOT NULL,
   role ENUM('DOCTOR','PATIENT','STAFF') NOT NULL,
   PRIMARY KEY (person_id, role),
   FOREIGN KEY (person_id) REFERENCES persons(person_id)
