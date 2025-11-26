@@ -459,15 +459,17 @@ public class MainController {
         String name = txtProcedureName.getText();
         String type = txtType.getText();
         String description = txtDescription.getText();
+        String defaultPrice = txtDefaultPrice.getText();
         
         // Nếu tất cả trường đều rỗng, tải lại toàn bộ danh sách
         if ((name == null || name.isBlank()) && 
             (type == null || type.isBlank()) && 
-            (description == null || description.isBlank())) {
+            (description == null || description.isBlank()) &&
+            (defaultPrice == null || defaultPrice.isBlank())) {
             loadProcedureCatalogTable();
         } else {
             // Tìm kiếm với các điều kiện đã nhập
-            procedures.setAll(procedureCatalogDAO.searchProcedureCatalogs(name, type, description));
+            procedures.setAll(procedureCatalogDAO.searchProcedureCatalogs(name, type, description, defaultPrice));
         }
     }
 

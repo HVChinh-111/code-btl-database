@@ -158,7 +158,7 @@ INSERT INTO appointments (app_id, s_person_id, p_person_id, slot_id, status) VAL
 
 -- STANDARD = 300000, PROFESSOR = 500000)
 
-INSERT INTO encounters (encounter_id, app_id, start_time, end_time, diagnosis, symtom, notes, fee) VALUES
+INSERT INTO encounters (encounter_id, app_id, start_time, end_time, diagnosis, symptom, notes, fee) VALUES
 (1,1,'2025-01-10 09:25:00','2025-01-10 09:40:00',
  'Common cold','Cough, sore throat','Rest and fluids',300000.00),   -- STANDARD
 (2,2,'2025-02-10 09:45:00','2025-02-10 10:00:00',

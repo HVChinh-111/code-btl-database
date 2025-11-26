@@ -88,9 +88,10 @@ public class ProcedureCatalogDAO {
      * @param name Tên thủ thuật (có thể null)
      * @param type Loại thủ thuật (có thể null)
      * @param description Mô tả (có thể null)
+     * @param defaultPrice Giá mặc định (có thể null)
      * @return Danh sách procedure catalog khớp với tất cả điều kiện đã điền
      */
-    public List<ProcedureCatalog> searchProcedureCatalogs(String name, String type, String description) {
+    public List<ProcedureCatalog> searchProcedureCatalogs(String name, String type, String description, String defaultPrice) {
         List<ProcedureCatalog> procedures = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT procedure_id, name, type, description, default_price FROM procedure_catalogs WHERE is_active = TRUE");
         List<String> params = new ArrayList<>();
@@ -107,6 +108,10 @@ public class ProcedureCatalogDAO {
         if (description != null && !description.isBlank()) {
             sql.append(" AND description LIKE ?");
             params.add("%" + description.trim() + "%");
+        }
+        if (defaultPrice != null && !defaultPrice.isBlank()) {
+            sql.append(" AND CAST(default_price AS CHAR) LIKE ?");
+            params.add("%" + defaultPrice.trim() + "%");
         }
         
         sql.append(" ORDER BY procedure_id");
