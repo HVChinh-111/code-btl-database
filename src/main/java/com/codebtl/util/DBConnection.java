@@ -8,7 +8,7 @@ public class DBConnection {
     public static Connection getConnection() throws SQLException {
         String URL = "jdbc:mysql://localhost:3306/btl_database1";
         String USER = "root";
-        String PASSWORD = "1112005@";
+        String PASSWORD = "1112005";
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
