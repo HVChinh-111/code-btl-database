@@ -1,49 +1,49 @@
 USE btl_database1;
 
 -- 1. persons (10 doctors + 10 staff + 20 patients = 40 người)
-INSERT INTO persons (person_id, name, dob, sex, tel, address) VALUES
-(1,'Nguyen Van A','1980-05-10','MALE','0900000001','Ha Noi'),
-(2,'Tran Thi B','1978-08-22','FEMALE','0900000002','Ha Noi'),
-(3,'Le Van C','1985-11-30','MALE','0900000003','Ho Chi Minh City'),
-(4,'Pham Thi D','1975-02-15','FEMALE','0900000004','Da Nang'),
-(5,'Hoang Van E','1982-07-07','MALE','0900000005','Hai Phong'),
-(6,'Vu Thi F','1988-09-19','FEMALE','0900000006','Can Tho'),
-(7,'Do Van G','1979-03-25','MALE','0900000007','Hue'),
-(8,'Nguyen Thi H','1983-12-05','FEMALE','0900000008','Ha Noi'),
-(9,'Bui Van I','1986-06-17','MALE','0900000009','Ho Chi Minh City'),
-(10,'Pham Thi J','1990-01-28','FEMALE','0900000010','Ha Noi'),
+INSERT INTO persons (person_id, name, dob, sex, tel, address, password) VALUES
+(1,'Nguyen Van A','1980-05-10','MALE','0900000001','Ha Noi','pass001'),
+(2,'Tran Thi B','1978-08-22','FEMALE','0900000002','Ha Noi','pass002'),
+(3,'Le Van C','1985-11-30','MALE','0900000003','Ho Chi Minh City','pass003'),
+(4,'Pham Thi D','1975-02-15','FEMALE','0900000004','Da Nang','pass004'),
+(5,'Hoang Van E','1982-07-07','MALE','0900000005','Hai Phong','pass005'),
+(6,'Vu Thi F','1988-09-19','FEMALE','0900000006','Can Tho','pass006'),
+(7,'Do Van G','1979-03-25','MALE','0900000007','Hue','pass007'),
+(8,'Nguyen Thi H','1983-12-05','FEMALE','0900000008','Ha Noi','pass008'),
+(9,'Bui Van I','1986-06-17','MALE','0900000009','Ho Chi Minh City','pass009'),
+(10,'Pham Thi J','1990-01-28','FEMALE','0900000010','Ha Noi','pass010'),
 -- staff
-(11,'Nguyen Van K','1984-04-12','MALE','0900000011','Ha Noi'),
-(12,'Tran Thi L','1987-09-03','FEMALE','0900000012','Ha Noi'),
-(13,'Le Van M','1991-02-20','MALE','0900000013','Ho Chi Minh City'),
-(14,'Pham Thi N','1993-07-15','FEMALE','0900000014','Da Nang'),
-(15,'Hoang Van O','1989-05-30','MALE','0900000015','Hai Phong'),
-(16,'Vu Thi P','1992-11-11','FEMALE','0900000016','Can Tho'),
-(17,'Do Van Q','1985-03-02','MALE','0900000017','Hue'),
-(18,'Nguyen Thi R','1994-06-09','FEMALE','0900000018','Ha Noi'),
-(19,'Bui Van S','1988-10-21','MALE','0900000019','Ho Chi Minh City'),
-(20,'Pham Thi T','1990-12-31','FEMALE','0900000020','Ha Noi'),
+(11,'Nguyen Van K','1984-04-12','MALE','0900000011','Ha Noi','pass011'),
+(12,'Tran Thi L','1987-09-03','FEMALE','0900000012','Ha Noi','pass012'),
+(13,'Le Van M','1991-02-20','MALE','0900000013','Ho Chi Minh City','pass013'),
+(14,'Pham Thi N','1993-07-15','FEMALE','0900000014','Da Nang','pass014'),
+(15,'Hoang Van O','1989-05-30','MALE','0900000015','Hai Phong','pass015'),
+(16,'Vu Thi P','1992-11-11','FEMALE','0900000016','Can Tho','pass016'),
+(17,'Do Van Q','1985-03-02','MALE','0900000017','Hue','pass017'),
+(18,'Nguyen Thi R','1994-06-09','FEMALE','0900000018','Ha Noi','pass018'),
+(19,'Bui Van S','1988-10-21','MALE','0900000019','Ho Chi Minh City','pass019'),
+(20,'Pham Thi T','1990-12-31','FEMALE','0900000020','Ha Noi','pass020'),
 -- patients
-(21,'Patient U1','1995-01-05','MALE','0900000021','Ha Noi'),
-(22,'Patient U2','1996-02-10','FEMALE','0900000022','Ha Noi'),
-(23,'Patient U3','1997-03-15','MALE','0900000023','Ho Chi Minh City'),
-(24,'Patient U4','1998-04-20','FEMALE','0900000024','Da Nang'),
-(25,'Patient U5','1999-05-25','MALE','0900000025','Hai Phong'),
-(26,'Patient U6','2000-06-30','FEMALE','0900000026','Can Tho'),
-(27,'Patient U7','1994-07-07','MALE','0900000027','Hue'),
-(28,'Patient U8','1993-08-08','FEMALE','0900000028','Ha Noi'),
-(29,'Patient U9','1992-09-09','MALE','0900000029','Ho Chi Minh City'),
-(30,'Patient U10','1991-10-10','FEMALE','0900000030','Ha Noi'),
-(31,'Patient U11','1990-11-11','MALE','0900000031','Ha Noi'),
-(32,'Patient U12','1989-12-12','FEMALE','0900000032','Da Nang'),
-(33,'Patient U13','1988-01-13','MALE','0900000033','Ho Chi Minh City'),
-(34,'Patient U14','1987-02-14','FEMALE','0900000034','Hai Phong'),
-(35,'Patient U15','1986-03-15','MALE','0900000035','Can Tho'),
-(36,'Patient U16','1985-04-16','FEMALE','0900000036','Hue'),
-(37,'Patient U17','1984-05-17','MALE','0900000037','Ha Noi'),
-(38,'Patient U18','1983-06-18','FEMALE','0900000038','Ho Chi Minh City'),
-(39,'Patient U19','1982-07-19','MALE','0900000039','Ha Noi'),
-(40,'Patient U20','1981-08-20','FEMALE','0900000040','Da Nang');
+(21,'Patient U1','1995-01-05','MALE','0900000021','Ha Noi','pass021'),
+(22,'Patient U2','1996-02-10','FEMALE','0900000022','Ha Noi','pass022'),
+(23,'Patient U3','1997-03-15','MALE','0900000023','Ho Chi Minh City','pass023'),
+(24,'Patient U4','1998-04-20','FEMALE','0900000024','Da Nang','pass024'),
+(25,'Patient U5','1999-05-25','MALE','0900000025','Hai Phong','pass025'),
+(26,'Patient U6','2000-06-30','FEMALE','0900000026','Can Tho','pass026'),
+(27,'Patient U7','1994-07-07','MALE','0900000027','Hue','pass027'),
+(28,'Patient U8','1993-08-08','FEMALE','0900000028','Ha Noi','pass028'),
+(29,'Patient U9','1992-09-09','MALE','0900000029','Ho Chi Minh City','pass029'),
+(30,'Patient U10','1991-10-10','FEMALE','0900000030','Ha Noi','pass030'),
+(31,'Patient U11','1990-11-11','MALE','0900000031','Ha Noi','pass031'),
+(32,'Patient U12','1989-12-12','FEMALE','0900000032','Da Nang','pass032'),
+(33,'Patient U13','1988-01-13','MALE','0900000033','Ho Chi Minh City','pass033'),
+(34,'Patient U14','1987-02-14','FEMALE','0900000034','Hai Phong','pass034'),
+(35,'Patient U15','1986-03-15','MALE','0900000035','Can Tho','pass035'),
+(36,'Patient U16','1985-04-16','FEMALE','0900000036','Hue','pass036'),
+(37,'Patient U17','1984-05-17','MALE','0900000037','Ha Noi','pass037'),
+(38,'Patient U18','1983-06-18','FEMALE','0900000038','Ho Chi Minh City','pass038'),
+(39,'Patient U19','1982-07-19','MALE','0900000039','Ha Noi','pass039'),
+(40,'Patient U20','1981-08-20','FEMALE','0900000040','Da Nang','pass040');
 
 -- 2. person_roles (mỗi người 1 role)
 INSERT INTO person_roles (person_id, role) VALUES
@@ -71,26 +71,26 @@ INSERT INTO doctors (d_person_id, speciality, level) VALUES
 
 -- 4. patients (20)
 INSERT INTO patients (p_person_id, first_seen) VALUES
-(21,'2024-01-10'),
-(22,'2024-01-15'),
-(23,'2024-02-05'),
-(24,'2024-02-20'),
-(25,'2024-03-10'),
-(26,'2024-03-25'),
-(27,'2024-04-05'),
-(28,'2024-04-18'),
-(29,'2024-05-02'),
-(30,'2024-05-16'),
-(31,'2024-06-01'),
-(32,'2024-06-10'),
-(33,'2024-07-03'),
-(34,'2024-07-20'),
-(35,'2024-08-08'),
-(36,'2024-08-25'),
-(37,'2024-09-05'),
-(38,'2024-09-18'),
-(39,'2024-10-01'),
-(40,'2024-10-15');
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(35, 1),
+(36, 1),
+(37, 1),
+(38, 1),
+(39, 1),
+(40, 1);
 
 -- 5. staffs (10)
 INSERT INTO staffs (s_person_id, workyear_start) VALUES
@@ -105,28 +105,50 @@ INSERT INTO staffs (s_person_id, workyear_start) VALUES
 (19,'2022-01-12'),
 (20,'2022-05-25');
 
--- 6. time_slots (20 slot, mỗi slot 20 phút)
-INSERT INTO time_slots (slot_id, start_time, end_time, status, is_active, d_person_id) VALUES
-(1,'2025-01-10 09:00:00','2025-01-10 09:20:00','AVAILABLE',1,1),
-(2,'2025-01-10 09:20:00','2025-01-10 09:40:00','BOOKED',1,1),
-(3,'2025-01-10 09:40:00','2025-01-10 10:00:00','BOOKED',1,2),
-(4,'2025-01-10 10:00:00','2025-01-10 10:20:00','AVAILABLE',1,2),
-(5,'2025-01-10 10:20:00','2025-01-10 10:40:00','BLOCKED',1,3),
-(6,'2025-01-10 10:40:00','2025-01-10 11:00:00','AVAILABLE',1,3),
-(7,'2025-01-10 13:00:00','2025-01-10 13:20:00','BOOKED',1,4),
-(8,'2025-01-10 13:20:00','2025-01-10 13:40:00','BOOKED',1,4),
-(9,'2025-01-10 13:40:00','2025-01-10 14:00:00','AVAILABLE',1,5),
-(10,'2025-01-10 14:00:00','2025-01-10 14:20:00','AVAILABLE',1,6),
-(11,'2025-01-10 14:20:00','2025-01-10 14:40:00','BOOKED',1,7),
-(12,'2025-01-10 14:40:00','2025-01-10 15:00:00','BOOKED',1,8),
-(13,'2025-01-11 09:00:00','2025-01-11 09:20:00','AVAILABLE',1,9),
-(14,'2025-01-11 09:20:00','2025-01-11 09:40:00','BOOKED',1,10),
-(15,'2025-01-11 09:40:00','2025-01-11 10:00:00','BOOKED',1,1),
-(16,'2025-01-11 10:00:00','2025-01-11 10:20:00','AVAILABLE',1,2),
-(17,'2025-01-11 10:20:00','2025-01-11 10:40:00','AVAILABLE',1,3),
-(18,'2025-01-11 10:40:00','2025-01-11 11:00:00','BOOKED',1,4),
-(19,'2025-01-11 13:00:00','2025-01-11 13:20:00','BOOKED',1,5),
-(20,'2025-01-11 13:20:00','2025-01-11 13:40:00','AVAILABLE',1,6);
+-- 6. time_slots (20 slot, mỗi slot 20 phút, ngày khớp với encounter chính dùng slot đó)
+INSERT INTO time_slots (slot_id, d_person_id, start_time, end_time, status, is_active) VALUES
+-- app 11 -> encounter 11 (2025-09-05)
+(1,  1,'2025-09-05 09:00:00','2025-09-05 09:20:00','AVAILABLE',1),
+-- app 1 -> encounter 1 (2025-01-10)
+(2,  1,'2025-01-10 09:20:00','2025-01-10 09:40:00','BOOKED',1),
+-- app 2 -> encounter 2 (2025-02-10)
+(3,  2,'2025-02-10 09:40:00','2025-02-10 10:00:00','BOOKED',1),
+-- app 12 -> encounter 12 (2025-09-18)
+(4,  2,'2025-09-18 10:00:00','2025-09-18 10:20:00','AVAILABLE',1),
+-- app 19 -> encounter 19 (2025-01-20)
+(5,  3,'2025-01-20 10:20:00','2025-01-20 10:40:00','BLOCKED',1),
+-- app 13 -> encounter 13 (2025-10-01)
+(6,  3,'2025-10-01 10:40:00','2025-10-01 11:00:00','AVAILABLE',1),
+-- app 3 -> encounter 3 (2025-03-10)
+(7,  4,'2025-03-10 13:00:00','2025-03-10 13:20:00','BOOKED',1),
+-- app 4 -> encounter 4 (2025-04-10)
+(8,  4,'2025-04-10 13:20:00','2025-04-10 13:40:00','BOOKED',1),
+-- app 14 -> encounter 14 (2025-10-15)
+(9,  5,'2025-10-15 13:40:00','2025-10-15 14:00:00','AVAILABLE',1),
+-- app 15 -> encounter 15 (2025-11-02)
+(10, 6,'2025-11-02 14:00:00','2025-11-02 14:20:00','AVAILABLE',1),
+-- app 5 -> encounter 5 (2025-06-10)
+(11, 7,'2025-06-10 14:20:00','2025-06-10 14:40:00','BOOKED',1),
+-- app 6 -> encounter 6 (2025-06-22)
+(12, 8,'2025-06-22 14:40:00','2025-06-22 15:00:00','BOOKED',1),
+-- app 16 -> encounter 16 (2025-11-18)
+(13, 9,'2025-11-18 09:00:00','2025-11-18 09:20:00','AVAILABLE',1),
+-- app 7 -> encounter 7 (2025-07-05)
+(14,10,'2025-07-05 09:20:00','2025-07-05 09:40:00','BOOKED',1),
+-- app 8 -> encounter 8 (2025-07-20)
+(15, 1,'2025-07-20 09:40:00','2025-07-20 10:00:00','BOOKED',1),
+-- app 17 -> encounter 17 (2025-12-01)
+(16, 2,'2025-12-01 10:00:00','2025-12-01 10:20:00','AVAILABLE',1),
+-- app 18 -> encounter 18 (2025-12-10)
+(17, 3,'2025-12-10 10:20:00','2025-12-10 10:40:00','AVAILABLE',1),
+-- app 9 -> encounter 9 (2025-08-08)
+(18, 4,'2025-08-08 10:40:00','2025-08-08 11:00:00','BOOKED',1),
+-- app 10 -> encounter 10 (2025-08-25)
+(19, 5,'2025-08-25 13:00:00','2025-08-25 13:20:00','BOOKED',1),
+-- app 20 -> encounter 20 (2025-04-22)
+(20, 6,'2025-04-22 13:20:00','2025-04-22 13:40:00','AVAILABLE',1);
+
+
 
 -- 7. appointments (24 cuộc hẹn, 1–20 sẽ có encounter, 21–24 là CANCELLED/NO_SHOW)
 INSERT INTO appointments (app_id, s_person_id, p_person_id, slot_id, status) VALUES

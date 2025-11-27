@@ -24,7 +24,7 @@ public class DoctorPerformanceDAO {
                 d.d_person_id AS doctor_id,
                 p.name AS doctor_name,
                 p.dob AS date_of_birth,
-                COUNT(DISTINCT a.p_person_id) AS number_of_patients,
+                COUNT(a.p_person_id) AS number_of_patients,
                 COUNT(CASE 
                     WHEN a.status = 'CHECKED_IN' THEN a.app_id 
                     ELSE NULL 

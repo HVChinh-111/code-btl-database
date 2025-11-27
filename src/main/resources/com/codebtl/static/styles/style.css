@@ -246,6 +246,26 @@
   -fx-text-fill: #ffffff;
 }
 
+.date-picker-popup .today {
+  -fx-background-color: rgba(75, 145, 229, 0.15);
+  -fx-text-fill: #4b91e5;
+  -fx-font-weight: 700;
+  -fx-border-color: #4b91e5;
+  -fx-border-width: 1.5px;
+  -fx-border-radius: 4px;
+}
+
+.date-picker-popup .today:hover {
+  -fx-background-color: rgba(75, 145, 229, 0.25);
+}
+
+.date-picker-popup .selected.today {
+  -fx-background-color: #4b91e5;
+  -fx-text-fill: #ffffff;
+  -fx-border-color: #2b6fc5;
+  -fx-border-width: 2px;
+}
+
 /* ================================
    TABLE VIEW COMPONENT
 ================================ */
